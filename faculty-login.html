@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white shadow-xl rounded-xl p-8 w-full max-w-md">
+
+    <h2 class="text-2xl font-bold text-center text-blue-800 mb-6">
+      Faculty Login
+    </h2>
+
+    <div class="space-y-4">
+
+      <div>
+        <label class="block font-medium mb-1">Username</label>
+        <input
+          id="username"
+          type="text"
+          class="w-full border rounded-md px-3 py-2"
+          placeholder="Enter username" />
+      </div>
+
+      <div>
+        <label class="block font-medium mb-1">Password</label>
+        <input
+          id="password"
+          type="password"
+          class="w-full border rounded-md px-3 py-2"
+          placeholder="Enter password" />
+      </div>
+
+      <button
+        onclick="facultyLogin()"
+        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-800 transition">
+        Login
+      </button>
+
+      <!-- Error Message -->
+      <p
+        id="errorMsg"
+        class="hidden text-center text-red-600 font-medium">
+        Invalid username or password
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function facultyLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      // In-built credentials
+      if (username === "faculty" && password === "faculty123") {
+        window.location.href = "faculty-dashboard.html";
+      } else {
+        errorMsg.classList.remove("hidden");
+      }
+    }
+  </script>
+
+</body>
+</html>

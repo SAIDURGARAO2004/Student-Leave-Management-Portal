@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Notifications</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold text-blue-800">
+        Student Notifications
+      </h1>
+
+      <a href="student-dashboard.html"
+         class="text-blue-600 font-medium hover:underline">
+        ⬅ Back to Dashboard
+      </a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-3xl mx-auto py-10">
+
+    <div class="bg-white rounded-xl shadow p-6">
+
+      <!-- Input -->
+      <div class="flex gap-4 mb-6">
+        <input
+          id="studentId"
+          type="text"
+          placeholder="Enter Student ID"
+          class="flex-1 border rounded-md px-3 py-2"
+        />
+
+        <button
+          onclick="loadNotifications()"
+          class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-800 transition">
+          Get Notifications
+        </button>
+      </div>
+
+      <!-- Notifications List -->
+      <ul
+        id="notificationList"
+        class="hidden list-disc pl-6 space-y-3 text-slate-700">
+      </ul>
+
+      <!-- No Data -->
+      <p
+        id="noDataMsg"
+        class="hidden text-center text-red-600 font-medium mt-4">
+        No notifications found for this Student ID
+      </p>
+
+    </div>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script>
+    async function loadNotifications() {
+      const studentId = document.getElementById("studentId").value.trim();
+      const list = document.getElementById("notificationList");
+      const noData = document.getElementById("noDataMsg");
+
+      // Reset UI
+      list.innerHTML = "";
+      list.classList.add("hidden");
+      noData.classList.add("hidden");
+
+      if (!studentId) {
+        alert("Please enter Student ID");
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/leave/student/${studentId}/notifications`
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch notifications");
+        }
+
+        const data = await res.json();
+        console.log("NOTIFICATIONS:", data); // debug
+
+        if (!data || data.length === 0) {
+          noData.classList.remove("hidden");
+          return;
+        }
+
+        data.forEach(n => {
+          const li = document.createElement("li");
+
+          li.innerHTML = `
+            <div class="border rounded-md p-3 bg-slate-50">
+              <p class="font-semibold text-blue-700">${n.title}</p>
+              <p class="text-slate-600">${n.message}</p>
+            </div>
+          `;
+
+          list.appendChild(li);
+        });
+
+        list.classList.remove("hidden");
+
+      } catch (err) {
+        console.error(err);
+        alert("Backend not responding or server error");
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leave Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold text-blue-800">Request Leave</h1>
+      <a href="student-dashboard.html"
+         class="text-blue-600 font-medium hover:underline">
+        ⬅ Back to Dashboard
+      </a>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto py-10">
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-2xl font-semibold text-center mb-6">
+        Student Leave Request
+      </h2>
+
+      <form id="leaveForm" class="grid md:grid-cols-2 gap-4">
+
+        <div>
+          <label class="font-medium">Student ID</label>
+          <input name="studentId" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Student Name</label>
+          <input name="studentName" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Student Email</label>
+          <input type="email" name="studentEmail" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Class / Section</label>
+          <input name="className" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Teacher ID</label>
+          <input name="teacherId" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Teacher Name</label>
+          <input name="teacherName" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Leave Type</label>
+          <select name="leaveType" class="w-full border rounded-md px-3 py-2" required>
+            <option value="">Select</option>
+            <option value="sick">Sick</option>
+            <option value="casual">Casual</option>
+            <option value="emergency">Emergency</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="font-medium">Parent Contact</label>
+          <input name="parentContact" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Start Date</label>
+          <input type="date" name="startDate" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">End Date</label>
+          <input type="date" name="endDate" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div>
+          <label class="font-medium">Total Days</label>
+          <input type="number" name="totalDays" class="w-full border rounded-md px-3 py-2" required />
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="font-medium">Reason</label>
+          <textarea name="reason" rows="3"
+            class="w-full border rounded-md px-3 py-2" required></textarea>
+        </div>
+
+        <div class="md:col-span-2 text-center mt-4">
+          <button type="submit"
+            class="bg-blue-600 text-white px-8 py-2 rounded-md hover:bg-blue-800 transition">
+            Submit Leave
+          </button>
+        </div>
+
+        <div id="successMsg"
+          class="hidden md:col-span-2 bg-green-100 text-green-700 text-center py-2 rounded-md mt-4">
+          Leave request submitted successfully
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.getElementById("leaveForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+const rawData = Object.fromEntries(new FormData(e.target));
+
+const formData = Object.fromEntries(
+  Object.entries(rawData).map(([key, value]) => [
+    key,
+    typeof value === "string" ? value.trim() : value
+  ])
+);
+
+      try {
+        const res = await fetch("http://localhost:3000/api/leave/requests", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          document.getElementById("successMsg").classList.remove("hidden");
+          e.target.reset();
+        } else {
+          alert(result.error || "Failed to submit leave");
+        }
+      } catch (err) {
+        alert("Backend not running");
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>

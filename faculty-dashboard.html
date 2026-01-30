@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-800">Faculty Dashboard</h1>
+      <button onclick="logout()" class="text-red-600 font-medium hover:underline">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto py-10">
+
+    <!-- NO DATA -->
+    <div id="noData" class="bg-white rounded-xl shadow p-6 text-center">
+      <p class="text-lg text-slate-600">No leave requests available</p>
+    </div>
+
+    <!-- Leave Card -->
+    <div id="leaveCard" class="hidden bg-white rounded-xl shadow p-6 mt-6">
+
+      <h2 class="text-xl font-semibold mb-4">Student Leave Request</h2>
+
+      <div class="space-y-2 mb-4">
+        <p><strong>Student ID:</strong> <span id="studentId"></span></p>
+        <p><strong>Student Name:</strong> <span id="studentName"></span></p>
+        <p><strong>Reason:</strong> <span id="reason"></span></p>
+        <p>
+          <strong>Status:</strong>
+          <span id="status" class="text-yellow-600 font-medium">Pending</span>
+        </p>
+      </div>
+
+      <div class="flex gap-4">
+        <button onclick="processLeave('approved')"
+          class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-800">
+          Approve
+        </button>
+
+        <button onclick="processLeave('rejected')"
+          class="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-800">
+          Reject
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const teacherId = "T101"; // 🔹 later get from login/session
+    let currentLeaveId = null;
+
+    // Load leave requests
+    async function loadLeaves() {
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/leave/requests?teacherId=${teacherId}`
+        );
+        const data = await res.json();
+
+        if (!data.length) return;
+
+        const leave = data.find(l => l.status === "pending") || data[0];
+
+        currentLeaveId = leave.id;
+
+        document.getElementById("noData").classList.add("hidden");
+        document.getElementById("leaveCard").classList.remove("hidden");
+
+        document.getElementById("studentId").textContent = leave.studentId;
+        document.getElementById("studentName").textContent = leave.studentName;
+        document.getElementById("reason").textContent = leave.reason;
+        document.getElementById("status").textContent = leave.status;
+
+      } catch (err) {
+        console.error(err);
+        alert("Failed to load leave requests");
+      }
+    }
+
+    // Approve / Reject
+    async function processLeave(action) {
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/leave/requests/${currentLeaveId}/process`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action,
+              teacherId,
+              comment: action === "approved"
+                ? "Approved by teacher"
+                : "Rejected by teacher"
+            })
+          }
+        );
+
+        const result = await res.json();
+
+        if (res.ok) {
+          const statusEl = document.getElementById("status");
+          statusEl.textContent = action;
+          statusEl.className =
+            action === "approved"
+              ? "text-green-600 font-medium"
+              : "text-red-600 font-medium";
+
+          alert(result.message);
+        } else {
+          alert(result.error);
+        }
+
+      } catch (err) {
+        alert("Server error");
+      }
+    }
+
+    function logout() {
+      window.location.href = "landingpage.html";
+    }
+
+    loadLeaves();
+  </script>
+
+</body>
+</html>

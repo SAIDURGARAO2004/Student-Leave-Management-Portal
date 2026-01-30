@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Leave Management Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#1E3A8A",
+            secondary: "#2563EB",
+          },
+        },
+      },
+    };
+  </script>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-primary">LeavePortal</h1>
+      <nav class="hidden md:flex gap-8 font-medium">
+        <a href="#" class="hover:text-secondary">Home</a>
+        <a href="#" class="hover:text-secondary">Features</a>
+        <a href="#" class="hover:text-secondary">About</a>
+        <a href="#" class="hover:text-secondary">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <h2 class="text-4xl font-bold text-primary leading-tight">
+        Student Leave Management Portal <br /> 
+      </h2>
+      <p class="mt-6 text-lg text-slate-600">
+        Apply for leave, track approvals, and manage student attendance efficiently with a centralized digital system.
+      </p>
+
+      <div class="mt-8 flex gap-4">
+        <a href="student-dashboard.html">
+  <button class="px-6 py-3 bg-secondary text-white rounded-lg hover:bg-primary transition">
+    Student 
+  </button>
+</a>
+
+       <a href="faculty-login.html">
+  <button class="px-6 py-3 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
+    Faculty
+  </button>
+</a>
+
+      </div>
+    </div>
+
+    <div class="hidden md:block">
+      <img
+        src="/image.png"
+        alt="Student Portal"
+        class="w-smax h-auto rounded-lg shadow-lg"
+      />
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <h3 class="text-3xl font-bold text-center text-primary mb-12">
+        Portal Features
+      </h3>
+
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="p-6 rounded-xl shadow hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold mb-2">Apply Leave</h4>
+          <p class="text-slate-600">
+            Students can submit leave requests online in seconds.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl shadow hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold mb-2">Track Status</h4>
+          <p class="text-slate-600">
+            Real-time leave approval status tracking.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl shadow hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold mb-2">Faculty Approval</h4>
+          <p class="text-slate-600">
+            Faculty can approve or reject leave requests easily.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-xl shadow hover:shadow-lg transition">
+          <h4 class="text-xl font-semibold mb-2">Admin Dashboard</h4>
+          <p class="text-slate-600">
+            Complete control over students, faculty, and reports.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Roles -->
+  <section class="max-w-7xl mx-auto px-6 py-16">
+    <h3 class="text-3xl font-bold text-center text-primary mb-12">
+      User Roles
+    </h3>
+
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-white p-8 rounded-xl shadow text-center">
+        <h4 class="text-xl font-semibold mb-3">🎓 Student</h4>
+        <p class="text-slate-600">
+          Apply leave and track approval status.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-xl shadow text-center">
+        <h4 class="text-xl font-semibold mb-3">👩‍🏫 Faculty</h4>
+        <p class="text-slate-600">
+          Review and approve student leave requests.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-xl shadow text-center">
+        <h4 class="text-xl font-semibold mb-3">🛠 Admin</h4>
+        <p class="text-slate-600">
+          Manage system data and generate reports.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-white py-6">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>© 2026 Student Leave Management Portal</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:underline">Privacy</a>
+        <a href="#" class="hover:underline">Terms</a>
+        <a href="#" class="hover:underline">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

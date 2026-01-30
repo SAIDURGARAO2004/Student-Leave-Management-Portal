@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      
+      <!-- Left: Title -->
+      <h1 class="text-2xl font-bold text-blue-800">
+        Student Dashboard
+      </h1>
+
+      <!-- Right: Navigation -->
+      <div class="flex gap-6 items-center">
+        <!-- Home Button -->
+        <a href="landingpage.html" class="text-blue-600 font-medium hover:underline">
+          🏠 Home
+        </a>
+
+        
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto mt-16 text-center">
+    <h2 class="text-3xl font-semibold mb-10">
+      Welcome, Student 👋
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-10">
+      
+      <!-- Leave Form -->
+      <a href="leave-form.html"
+         class="bg-white shadow rounded-xl p-10 hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-3">📝 Leave Form</h3>
+        <p class="text-slate-600">
+          Apply for a new leave request
+        </p>
+      </a>
+
+      <!-- Student Notifications -->
+<a href="student-notifications.html"
+   class="bg-white shadow rounded-xl p-10 hover:shadow-lg transition">
+  <h3 class="text-xl font-bold mb-3">🔔 Student Notifications</h3>
+  <p class="text-slate-600">
+    View leave approval status
+  </p>
+</a>
+
+
+    </div>
+  </main>
+
+</body>
+</html>
